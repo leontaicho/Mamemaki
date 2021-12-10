@@ -16,8 +16,6 @@ public static class XboxConfig {
             return;
         }
 
-
-        
         axesProperty.arraySize = 26; 
         serializedObject.ApplyModifiedProperties();
         int count = 0;
