@@ -38,6 +38,11 @@ public class PlayerAction : MonoBehaviour
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
+    private void FinishAttack()
+    {
+        state = State.Idle;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -45,16 +50,24 @@ public class PlayerAction : MonoBehaviour
         moveZ = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(moveX, 0, moveZ);
         myAnim.SetFloat("Speed", dir.magnitude);
+        
+        // 攻撃処理
+        if(Input.GetButtonDown("BumperR"))
+        {
+            myAnim.SetTrigger("Attack");
+            myRB.velocity = Vector3.zero;
+            state = State.Attack;
+        }
     }
 
     void FixedUpdate()
     {
-        if (myAnim.GetFloat("Speed") > 0)
+        if (myAnim.GetFloat("Speed") > 0 && state == State.Idle)
         {
             // 移動している
             state = State.Walk;
         }
-        else
+        else if(myAnim.GetFloat("Speed") <= 0 && state == State.Walk)
         {
             // 待機状態
             state = State.Idle;
