@@ -42,6 +42,12 @@ public class PlayerAction : MonoBehaviour
         SmokeMain = PatSmoke.GetComponent<ParticleSystem>().main;
     }
 
+    public void OnDamage(int Dmg)
+    {
+        HP -= Dmg;
+        myAnim.SetTrigger("Hit");
+    }
+
     private void FinishAttack()
     {
         state = State.Idle;
@@ -53,7 +59,6 @@ public class PlayerAction : MonoBehaviour
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(moveX, 0, moveZ);
-        Debug.Log(dir);
         myAnim.SetFloat("Speed", dir.magnitude);
 
         // 移動方向への量に応じて砂ぼこりを制御する。
@@ -65,6 +70,11 @@ public class PlayerAction : MonoBehaviour
             myAnim.SetTrigger("Attack");
             myRB.velocity = Vector3.zero;
             state = State.Attack;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            OnDamage(10);
         }
     }
 
