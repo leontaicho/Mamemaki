@@ -26,6 +26,9 @@ public class PlayerAction : MonoBehaviour
     private Vector3 cameraForward; // カメラの向き   
     private Vector3 moveForward; // プレイヤーの向き
     private State state;    // 自身のステータス
+    [Header("土煙 : エフェクト")]
+    [SerializeField] private GameObject PatSmoke;
+    ParticleSystem.MainModule SmokeMain; //砂煙の本体
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +39,7 @@ public class PlayerAction : MonoBehaviour
         myAnim = this.gameObject.GetComponent<Animator>();
         //カメラを取得
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        SmokeMain = PatSmoke.GetComponent<ParticleSystem>().main;
     }
 
     private void FinishAttack()
@@ -49,10 +53,14 @@ public class PlayerAction : MonoBehaviour
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(moveX, 0, moveZ);
+        Debug.Log(dir);
         myAnim.SetFloat("Speed", dir.magnitude);
-        
+
+        // 移動方向への量に応じて砂ぼこりを制御する。
+        SmokeMain.startSize = dir.sqrMagnitude * 1.5f;
+
         // 攻撃処理
-        if(Input.GetButtonDown("BumperR"))
+        if (Input.GetButtonDown("BumperR"))
         {
             myAnim.SetTrigger("Attack");
             myRB.velocity = Vector3.zero;
@@ -71,6 +79,7 @@ public class PlayerAction : MonoBehaviour
         {
             // 待機状態
             state = State.Idle;
+            myRB.velocity = Vector3.zero;
         }
 
         // 移動していたら
