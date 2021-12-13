@@ -409,72 +409,6 @@ MonoBehaviour:
   Player: {fileID: 1204595971879572}
   CameraPosY: 2.5
   CameraPosZ: -4
---- !u!1 &1062705544 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1184748017418208925, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-  m_PrefabInstance: {fileID: 1421638998}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &1421638998
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1204595971879577}
-    m_Modifications:
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.056
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.103
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 305050073201582635, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1184748017418208925, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: m_Name
-      value: PatSmoke
-      objectReference: {fileID: 0}
-    - target: {fileID: 8906595136699060118, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 1.5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
 --- !u!1 &1614742427
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,11 +510,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8244916718323491929, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
   m_PrefabInstance: {fileID: 8245971623880529613}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1204595971879577 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8241831989312847683, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
-  m_PrefabInstance: {fileID: 8245971623880529613}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8245971623880529613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -636,10 +565,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8245971623159852905, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
-      propertyPath: PatSmoke
-      value: 
-      objectReference: {fileID: 1062705544}
     - target: {fileID: 8303365540262827011, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
