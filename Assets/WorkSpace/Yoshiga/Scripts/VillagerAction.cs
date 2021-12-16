@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VillagerAction : MonoBehaviour
 {
+    private int HP; // 村人のHP
+    private CapsuleCollider myCollider;
     private List<GameObject> targetList = new List<GameObject>();   // 豆を投げつけるターゲットリスト
     private GameObject target;  // 投げる相手を格納している変数
     private float interval; // 投げるタイミングのインターバル
@@ -11,15 +13,20 @@ public class VillagerAction : MonoBehaviour
     private GameManager manager;    // ゲームマネージャー
     private int beansNum;   // 投げる豆の数
     private GameObject beans;   // 豆オブジェクト
-
+    private List<GameObject> myBeansList = new List<GameObject>();  // 自身が投げた豆のリスト
+    [Header("豆のスポーンポジション : オブジェクト")]
+    [SerializeField]private GameObject spawnPos;    // 豆のスポーンポジション
+    
     // Start is called before the first frame update
     void Start()
     {
+        HP = manager.villagerHP;
         myAnim = this.gameObject.GetComponent<Animator>();
         manager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>();
         interval = Random.Range(1.0f,5.0f);
         beansNum = manager.beansNum;
         beans = (GameObject)Resources.Load("Beans");
+        myCollider = this.gameObject.GetComponent<CapsuleCollider>();
         // リストに要素を入れる
         GameObject[] enemys = GameObject.FindGameObjectsWithTag("Enemy");
         foreach(var i in enemys)
@@ -28,6 +35,18 @@ public class VillagerAction : MonoBehaviour
         }
         targetList.Add(GameObject.FindGameObjectWithTag("Player"));
         FindTarget();
+    }
+
+    // ダメージ処理
+    public void OnDamage(int Dmg)
+    {
+        HP -= Dmg;
+        if(HP <= 0)
+        {
+            HP = 0;
+            myCollider.enabled = false;
+            myAnim.SetTrigger("Dead");
+        }
     }
 
     // 誰が一番近いか判定するための処理
@@ -49,10 +68,29 @@ public class VillagerAction : MonoBehaviour
 
     void ThrowBeans()
     {
+        // 豆リストをクリア
+        foreach(var i in myBeansList)
+        {
+            if(i != null)
+            {
+                Destroy(i);
+            }
+        }
+        myBeansList.Clear();
+
         for(int i = 0; i < beansNum; ++i)
         {
             GameObject b;
-            b = Instantiate(beans);
+            Rigidbody bRB;
+            Vector3 throwForce;           
+            b = Instantiate(beans,spawnPos.transform.position,spawnPos.transform.rotation);
+            bRB = b.GetComponent<Rigidbody>();
+            throwForce = this.gameObject.transform.forward 
+                       + new Vector3(this.gameObject.transform.forward.x + Random.Range(-0.5f,0.5f),
+                                     Random.Range(1.0f, 2.0f), 
+                                     this.gameObject.transform.forward.z);
+            bRB.AddForce(throwForce * manager.beansSpeed, ForceMode.Impulse);
+            myBeansList.Add(b);
         }
     }
 
