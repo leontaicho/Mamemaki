@@ -19,8 +19,7 @@ public class VillagerAction : MonoBehaviour
     
     // Start is called before the first frame update
     void Start()
-    {
-        HP = manager.villagerHP;
+    { 
         myAnim = this.gameObject.GetComponent<Animator>();
         manager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>();
         interval = Random.Range(1.0f,5.0f);
@@ -34,6 +33,7 @@ public class VillagerAction : MonoBehaviour
             targetList.Add(i);
         }
         targetList.Add(GameObject.FindGameObjectWithTag("Player"));
+        HP = manager.villagerHP;
         FindTarget();
     }
 
