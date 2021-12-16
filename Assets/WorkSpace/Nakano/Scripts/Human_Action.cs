@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Human_Action : MonoBehaviour
 {
-    bool isDaed;
+    public bool isDaed = false;
     void Start()
     {
         
