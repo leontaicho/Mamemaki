@@ -483,11 +483,6 @@ MonoBehaviour:
   throwInterval: 5
   beansNum: 9
   beansSpeed: 2
---- !u!1 &1062705544 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1184748017418208925, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
-  m_PrefabInstance: {fileID: 1421638998}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1421638998
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -717,7 +712,7 @@ PrefabInstance:
     - target: {fileID: 8245971623159852905, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
       propertyPath: PatSmoke
       value: 
-      objectReference: {fileID: 1062705544}
+      objectReference: {fileID: 1184748017418208925, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
     - target: {fileID: 8303365540262827011, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
