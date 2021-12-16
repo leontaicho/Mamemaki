@@ -479,7 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d30341269632724cbd89b068593a06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  villagerHP: 0
+  villagerHP: 100
   throwInterval: 5
   beansNum: 9
   beansSpeed: 2
