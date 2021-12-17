@@ -13,11 +13,14 @@ public class PlayerAction : MonoBehaviour
         Hit,
     }
 
+    private GameManager manager;    // GameManager
     [Header("プレイヤーのステータス")]
     [SerializeField]
     private float Speed = 0;
     [SerializeField]
     private float HP;
+    [Header("プレイヤーの無敵時間 : 秒")]
+    [SerializeField] private float IntervalTime;
     private float moveX = 0;
     private float moveZ = 0;
     private Rigidbody myRB;
@@ -28,7 +31,10 @@ public class PlayerAction : MonoBehaviour
     private State state;    // 自身のステータス
     [Header("土煙 : エフェクト")]
     [SerializeField] private GameObject PatSmoke;
-    ParticleSystem.MainModule SmokeMain; //砂煙の本体
+    ParticleSystem.MainModule SmokeMain; //砂煙の本体  
+    private float invincibleTime;    // プレイヤーの無敵時間
+    [Header("自身の体のメッシュ")]
+    [SerializeField] private SkinnedMeshRenderer[] myMesh = new SkinnedMeshRenderer[3];
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +45,7 @@ public class PlayerAction : MonoBehaviour
         myAnim = this.gameObject.GetComponent<Animator>();
         //カメラを取得
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+        manager = MainCamera.GetComponent<GameManager>();
         SmokeMain = PatSmoke.GetComponent<ParticleSystem>().main;
     }
 
@@ -46,6 +53,7 @@ public class PlayerAction : MonoBehaviour
     {
         HP -= Dmg;
         myAnim.SetTrigger("Hit");
+        invincibleTime = IntervalTime;
     }
 
     private void FinishAttack()
@@ -53,9 +61,50 @@ public class PlayerAction : MonoBehaviour
         state = State.Idle;
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "Beans")
+        {
+            Destroy(other.gameObject);
+            if(invincibleTime <= 0)
+            {
+                OnDamage(manager.beansDmg);
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        // 点滅処理
+        if(invincibleTime > 0)
+        {
+            invincibleTime -= Time.deltaTime;
+            if(invincibleTime <= 0)
+            {
+                invincibleTime = 0;
+                foreach (var i in myMesh)
+                {
+                    i.enabled = true;
+                }
+            }
+
+            if(invincibleTime % 0.3f < 0.2)
+            {
+                foreach(var i in myMesh)
+                {
+                    i.enabled = true;
+                }
+            }
+            else
+            {
+                foreach (var i in myMesh)
+                {
+                    i.enabled = false;
+                }
+            }
+        }
+
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(moveX, 0, moveZ);
@@ -72,10 +121,10 @@ public class PlayerAction : MonoBehaviour
             state = State.Attack;
         }
 
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            OnDamage(10);
-        }
+        //if(Input.GetKeyDown(KeyCode.Return))
+        //{
+        //    OnDamage(10);
+        //}
     }
 
     void FixedUpdate()

@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public int beansNum;
     [Header("村人の投げる豆の速さ")]
     public float beansSpeed;
+    [Header("村人の投げる豆の威力")]
+    public int beansDmg;
 
     // Start is called before the first frame update
     void Start()
