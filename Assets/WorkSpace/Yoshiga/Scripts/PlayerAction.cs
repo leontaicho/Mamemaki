@@ -54,6 +54,7 @@ public class PlayerAction : MonoBehaviour
         HP -= Dmg;
         myAnim.SetTrigger("Hit");
         invincibleTime = IntervalTime;
+        state = State.Hit;
     }
 
     private void FinishAttack()
@@ -83,6 +84,7 @@ public class PlayerAction : MonoBehaviour
             if(invincibleTime <= 0)
             {
                 invincibleTime = 0;
+                state = State.Idle;
                 foreach (var i in myMesh)
                 {
                     i.enabled = true;
