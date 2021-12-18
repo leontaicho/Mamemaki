@@ -123,6 +123,25 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &53134834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2600141353943915559, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
+  m_PrefabInstance: {fileID: 8245971623880529613}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &53134836
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53134834}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.18648978
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: -0.00033520945, y: 0.43, z: -0.0000005450703}
 --- !u!1 &531847974 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3486305451689148453, guid: 30564327c8b509442a1460c22f4d092a, type: 3}
@@ -748,6 +767,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5174005827790236026, guid: 30564327c8b509442a1460c22f4d092a, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30564327c8b509442a1460c22f4d092a, type: 3}
 --- !u!1001 &8245971623880529613
@@ -757,6 +780,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2600141353943915559, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
+      propertyPath: m_TagString
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 8241831989312847683, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
       propertyPath: m_RootOrder
       value: 3
