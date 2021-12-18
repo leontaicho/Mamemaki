@@ -631,14 +631,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 1
-        functionName: StartStun
-        data: 
-        objectReferenceParameter: {fileID: 2036004620876038439, guid: 68c4d18bfb5e567409a6e8cdc12682ec, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1

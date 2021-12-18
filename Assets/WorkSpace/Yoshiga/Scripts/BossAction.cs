@@ -20,8 +20,9 @@ public class BossAction : MonoBehaviour
     [SerializeField] private float attackInterval;
     [Header("混乱時間 : 秒")]
     [SerializeField] private float stunInterval;
-    private float interval;   // 攻撃やスタンのインターバル
-    [HideInInspector] public State bossState;    // ボスのステータス
+    private float interval;   // 攻撃のインターバル
+    private float interval2;    // 混乱インターバル
+    /*[HideInInspector]*/ public State bossState;    // ボスのステータス
     [Header("混乱エフェクト : オブジェクト")]
     [SerializeField] private GameObject stunEffect;
     
@@ -40,14 +41,14 @@ public class BossAction : MonoBehaviour
         {
             --HP;
             bossState = State.Hit;
-            myAnim.SetTrigger("Damage");       
+            myAnim.SetTrigger("Damage");
         }
     }
 
     // 混乱処理
-    private void StartStun()
+    public void StartStun()
     {
-        interval = stunInterval;
+        interval2 = stunInterval;
         stunEffect.SetActive(true);
     }
 
@@ -74,16 +75,18 @@ public class BossAction : MonoBehaviour
             }
             this.gameObject.transform.LookAt(player.transform.position);
         }
-        else if(bossState == State.Hit)
+        
+        if(bossState == State.Hit)
         {
-            if (interval > 0)
+            if (interval2 > 0)
             {
-                interval -= Time.deltaTime;
-                if (interval <= 0)
+                interval2 -= Time.deltaTime;
+                if (interval2 <= 0)
                 {
                     myAnim.SetTrigger("FinishStun");
                     stunEffect.SetActive(false);
                     bossState = State.Idle;
+                    // 攻撃頻度のリセット
                     interval = attackInterval;
                 }
             }
