@@ -14,11 +14,17 @@ public class BossAction : MonoBehaviour
 
     private GameObject player;
     private Animator myAnim;
+    [Header("敵のHP")]
+    [SerializeField] private int HP;
     [Header("攻撃頻度 : 秒")]
     [SerializeField] private float attackInterval;
-    public float interval;   // 攻撃のインターバル
-    [HideInInspector]public State bossState;    // ボスのステータス
-
+    [Header("混乱時間 : 秒")]
+    [SerializeField] private float stunInterval;
+    private float interval;   // 攻撃やスタンのインターバル
+    [HideInInspector] public State bossState;    // ボスのステータス
+    [Header("混乱エフェクト : オブジェクト")]
+    [SerializeField] private GameObject stunEffect;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +32,23 @@ public class BossAction : MonoBehaviour
         myAnim = this.gameObject.GetComponent<Animator>();
         bossState = State.Idle;
         interval = attackInterval;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Tree")
+        {
+            --HP;
+            bossState = State.Hit;
+            myAnim.SetTrigger("Damage");       
+        }
+    }
+
+    // 混乱処理
+    private void StartStun()
+    {
+        interval = stunInterval;
+        stunEffect.SetActive(true);
     }
 
     public void AttackFinish()
@@ -51,7 +74,20 @@ public class BossAction : MonoBehaviour
             }
             this.gameObject.transform.LookAt(player.transform.position);
         }
-
+        else if(bossState == State.Hit)
+        {
+            if (interval > 0)
+            {
+                interval -= Time.deltaTime;
+                if (interval <= 0)
+                {
+                    myAnim.SetTrigger("FinishStun");
+                    stunEffect.SetActive(false);
+                    bossState = State.Idle;
+                    interval = attackInterval;
+                }
+            }
+        }
         
     }
 }

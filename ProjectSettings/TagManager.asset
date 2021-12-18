@@ -8,6 +8,7 @@ TagManager:
   - Beans
   - Villager
   - Weapon
+  - Tree
   layers:
   - Default
   - TransparentFX

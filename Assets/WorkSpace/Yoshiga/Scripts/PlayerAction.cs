@@ -35,7 +35,7 @@ public class PlayerAction : MonoBehaviour
     private float invincibleTime;    // プレイヤーの無敵時間
     [Header("自身の体のメッシュ")]
     [SerializeField] private SkinnedMeshRenderer[] myMesh = new SkinnedMeshRenderer[3];
-    [HideInInspector] public bool CanAttack;    // 攻撃判定がオンかどうかのフラグ
+    /*[HideInInspector]*/ public bool CanAttack;    // 攻撃判定がオンかどうかのフラグ
 
     // Start is called before the first frame update
     void Start()
