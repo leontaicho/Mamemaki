@@ -35,6 +35,7 @@ public class PlayerAction : MonoBehaviour
     private float invincibleTime;    // プレイヤーの無敵時間
     [Header("自身の体のメッシュ")]
     [SerializeField] private SkinnedMeshRenderer[] myMesh = new SkinnedMeshRenderer[3];
+    [HideInInspector] public bool CanAttack;    // 攻撃判定がオンかどうかのフラグ
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,7 @@ public class PlayerAction : MonoBehaviour
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         manager = MainCamera.GetComponent<GameManager>();
         SmokeMain = PatSmoke.GetComponent<ParticleSystem>().main;
+        CanAttack = false;
     }
 
     public void OnDamage(int Dmg)
@@ -57,9 +59,15 @@ public class PlayerAction : MonoBehaviour
         state = State.Hit;
     }
 
+    private void AttackStart()
+    {
+        CanAttack = true;
+    }
+
     private void FinishAttack()
     {
         state = State.Idle;
+        CanAttack = false;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -116,17 +124,12 @@ public class PlayerAction : MonoBehaviour
         SmokeMain.startSize = dir.sqrMagnitude * 1.5f;
 
         // 攻撃処理
-        if (Input.GetButtonDown("BumperR"))
+        if (Input.GetButtonDown("BumperR") && state != State.Hit && state != State.Attack)
         {
             myAnim.SetTrigger("Attack");
             myRB.velocity = Vector3.zero;
             state = State.Attack;
         }
-
-        //if(Input.GetKeyDown(KeyCode.Return))
-        //{
-        //    OnDamage(10);
-        //}
     }
 
     void FixedUpdate()

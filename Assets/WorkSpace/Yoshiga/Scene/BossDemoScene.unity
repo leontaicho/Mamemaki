@@ -123,6 +123,24 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &531847974 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3486305451689148453, guid: 30564327c8b509442a1460c22f4d092a, type: 3}
+  m_PrefabInstance: {fileID: 3486305451656594018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &531847975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531847974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7871b0ae2d1ec9d419a239a1a7cc7b78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HP: 0
 --- !u!137 &684991226 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8324359565391775361, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
@@ -678,6 +696,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 62043793441618412, guid: 30564327c8b509442a1460c22f4d092a, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3486305451689148453, guid: 30564327c8b509442a1460c22f4d092a, type: 3}
       propertyPath: m_Name
       value: Tree
