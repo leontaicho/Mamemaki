@@ -6,6 +6,8 @@ public class TreeAction : MonoBehaviour
 {
     [Header("木が何回殴られたら倒れるか : 回数")]
     [SerializeField] private int HP;
+    [Header("ヒットエフェクト : オブジェクト")]
+    [SerializeField] private GameObject HitEffect;
     private GameObject player;
     private PlayerAction playerScript;
     private bool fallDownFlg;   // 倒れているかのフラグ
@@ -28,6 +30,8 @@ public class TreeAction : MonoBehaviour
         if(other.gameObject.tag == "Weapon" && playerScript.CanAttack)
         {
             --HP;
+            // ヒットエフェクトを生成
+            Instantiate(HitEffect, other.gameObject.transform.position, other.gameObject.transform.rotation);
             if(HP <= 0)
             {
                 fallDownFlg = true;
@@ -57,6 +61,9 @@ public class TreeAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.Return))
+        {
+            fallDownFlg = true;
+        }
     }
 }

@@ -438,7 +438,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 1204595971879572}
   CameraPosY: 2.5
-  CameraPosZ: -4
+  CameraPosZ: 4
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,6 +701,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 531847975, guid: 30564327c8b509442a1460c22f4d092a, type: 3}
+      propertyPath: HitEffect
+      value: 
+      objectReference: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
     - target: {fileID: 3486305451689148453, guid: 30564327c8b509442a1460c22f4d092a, type: 3}
       propertyPath: m_Name
       value: Tree
