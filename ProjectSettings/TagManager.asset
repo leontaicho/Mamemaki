@@ -9,6 +9,8 @@ TagManager:
   - Villager
   - Weapon
   - Tree
+  - FxTemporaire
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -19,8 +21,8 @@ TagManager:
   - 
   - 
   - Beans
-  - 
-  - 
+  - Walls
+  - Player
   - 
   - 
   - 
