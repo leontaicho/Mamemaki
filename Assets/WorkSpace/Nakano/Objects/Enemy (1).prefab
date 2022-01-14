@@ -1023,7 +1023,7 @@ GameObject:
   - component: {fileID: 1633549721802348587}
   - component: {fileID: 1633549721802348586}
   - component: {fileID: 1633549721802348585}
-  - component: {fileID: 1633549721802348584}
+  - component: {fileID: 280647055}
   m_Layer: 0
   m_Name: Enemy (1)
   m_TagString: Untagged
@@ -1062,7 +1062,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: a619ce5374bd28a46b51651e960753d9, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1076,13 +1076,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633549721802348591}
   serializedVersion: 2
-  m_Mass: 0.5
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!136 &1633549721802348585
 CapsuleCollider:
@@ -1098,7 +1098,7 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &1633549721802348584
+--- !u!114 &280647055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1107,10 +1107,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1633549721802348591}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e3bc17aa3da75d4fb7808c8def886bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 5090bcc566074db49837a621117090ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
+  Speed: 5
+  HP: 0
+  PatSmoke: {fileID: 1184748017418208925, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
+  Human_obj:
+  - {fileID: 0}
+  deathTime: 3
+  freezeTime: 0.5
+  IntervalTime: 0
+  Dis: 3
+  CanAttack: 0
 --- !u!1 &1633549721835319764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1199,7 +1208,7 @@ Transform:
   m_GameObject: {fileID: 1633549721917823793}
   m_LocalRotation: {x: 0.000000081460335, y: 0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 200, z: 200}
+  m_LocalScale: {x: 400, y: 400, z: 400}
   m_Children: []
   m_Father: {fileID: 1633549721802348580}
   m_RootOrder: 2
@@ -2184,6 +2193,8 @@ GameObject:
   - component: {fileID: 1633549722798400116}
   - component: {fileID: 1633549722798400123}
   - component: {fileID: 6301266623625252655}
+  - component: {fileID: 1346757032}
+  - component: {fileID: 758008830003560190}
   m_Layer: 0
   m_Name: Mace1H_Basic
   m_TagString: Untagged
@@ -2200,7 +2211,7 @@ Transform:
   m_GameObject: {fileID: 1633549722798400121}
   m_LocalRotation: {x: 0.6570454, y: -0.1392592, z: -0.07012481, w: 0.7375505}
   m_LocalPosition: {x: 0.00018, y: 0.00132, z: 0.00116}
-  m_LocalScale: {x: 0.009999994, y: 0.01, z: 0.009999998}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 1633549721393667667}
   m_RootOrder: 5
@@ -2262,12 +2273,38 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633549722798400121}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.1864898
   m_Height: 0.7585697
   m_Direction: 1
   m_Center: {x: -0.000335069, y: 0.23784477, z: -0.0000005506958}
+--- !u!114 &1346757032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633549722798400121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da813bbdec7e9b544a8fff7cb06ad78a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+--- !u!114 &758008830003560190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633549722798400121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da813bbdec7e9b544a8fff7cb06ad78a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
 --- !u!1 &1633549722828121528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2634,7 +2671,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1633549723152526432}
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0, z: -24.42}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 1633549721802348580}

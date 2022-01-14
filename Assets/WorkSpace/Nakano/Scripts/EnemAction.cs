@@ -42,11 +42,19 @@ public class EnemAction : MonoBehaviour
     [SerializeField]
     private float freezeTime = 0.5f;
 
+    [Header("プレイヤーの無敵時間 : 秒")]
+    [SerializeField] private float IntervalTime;
+    private float invincibleTime;    // プレイヤーの無敵時間
+
     [Header("攻撃開始距離")]
     [SerializeField]
     float Dis = 3f;
 
     int TargetCount = 0;
+
+    public bool CanAttack = false;
+
+    private float Elapsed = 5.0f;
 
 
     void Start()
@@ -71,6 +79,13 @@ public class EnemAction : MonoBehaviour
         SmokeMain = PatSmoke.GetComponent<ParticleSystem>().main;
     }
 
+    public void OnDamage(int Dmg)
+    {
+        HP -= Dmg;
+        myAnim.SetTrigger("Hit");
+        invincibleTime = IntervalTime;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -88,22 +103,17 @@ public class EnemAction : MonoBehaviour
         }
     }
 
-    void Attack(Transform Pos)
+    private void AttackStart()
     {
-        float dis = Vector3.Distance(this.gameObject.transform.position, Pos.transform.position);
-        Pos.transform.LookAt(PL_Obj.transform.position);
-        myRB.velocity = transform.forward * Speed;
-        myAnim.SetFloat("Speed", Speed);
-        if (Dis > dis)
-        {
-            myAnim.SetFloat("Speed", 0);
-            myRB.velocity = Vector3.zero;
-            myAnim.SetBool("Attack", true); //攻撃開始
-        }
-
+        CanAttack = true;
         
-      
     }
+
+    private void FinishAttack()
+    {
+        CanAttack = false;
+    }
+
 
 
 
@@ -133,20 +143,35 @@ public class EnemAction : MonoBehaviour
             TargetCount++;
         }
 
-        else if (PL_Obj.isDaed == true)
-        {
-            //回転値を取得
-            this.transform.LookAt(PL_Obj.transform.position);
-            myRB.velocity = transform.forward * Speed;
-            //    myRB.velocity = new Vector3(transform.position.x, 0, transform.position.z) + transform.forward * Speed;
-        }
+        //else if (PL_Obj.isDaed == true)
+        //{
+           
+
+
+        //}
 
         else
         {
-            //回転値を取得
-            this.transform.LookAt(Human_obj[TargetCount].gameObject.transform.position);
-            myRB.velocity = transform.forward * Speed;
-            myAnim.SetFloat("Speed", Speed);
+            float dis = Vector3.Distance(this.gameObject.transform.position, Player_obj.transform.position);
+
+            if (dis < Dis)
+            {
+                Elapsed += Time.deltaTime;
+                myAnim.SetFloat("Speed", 0);
+                myRB.velocity = Vector3.zero;
+                if (Elapsed > 2)
+                {
+                    myAnim.SetTrigger("Attack"); //攻撃開始
+                    Elapsed = 0.0f;
+                }
+            }
+            else
+            {
+                this.transform.LookAt(Player_obj.transform.position);
+                myRB.velocity = transform.forward * Speed;
+                myAnim.SetFloat("Speed", Speed);
+                Elapsed = 5.0f;
+            }
         }
 
     }

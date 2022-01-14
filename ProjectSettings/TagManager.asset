@@ -10,8 +10,12 @@ TagManager:
   - Weapon
   - Tree
   - FxTemporaire
+<<<<<<< HEAD
   - Collide
   - club
+=======
+  - Wall
+>>>>>>> 68fdea05f9d9e8402993bd31f8ea215e2dcb7f57
   layers:
   - Default
   - TransparentFX
@@ -22,8 +26,8 @@ TagManager:
   - 
   - 
   - Beans
-  - 
-  - 
+  - Walls
+  - Player
   - 
   - 
   - 
