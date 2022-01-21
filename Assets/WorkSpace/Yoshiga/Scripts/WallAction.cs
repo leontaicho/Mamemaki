@@ -45,7 +45,6 @@ public class WallAction : MonoBehaviour
         Instantiate(MineEffect, transform.position, transform.rotation);
         foreach (var i in Boxes)
         {
-            //i.gameObject.GetComponent<BoxCollider>().enabled = false;
             i.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1.0f,1.0f),
                                                                         2.0f,
                                                                         Random.Range(-1.0f, 1.0f)) * 5.0f, ForceMode.Impulse);
