@@ -6,6 +6,6 @@ using UnityEngine;
 
 public class HumanList : MonoBehaviour
 {
-    [SerializeField] GameObject[] obj_Humans;
-    public GameObject[] Humans => obj_Humans;
+    List<GameObject> obj_Humans = new List<GameObject>();
+    public List<GameObject> Humans => obj_Humans; 
 }
