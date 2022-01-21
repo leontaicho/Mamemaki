@@ -10,10 +10,12 @@ public class EnemyGenerator : MonoBehaviour
     public GameObject enemyPrefab;
 
     [Header("敵の座標")]
-    [SerializeReference] float x, y, z;
+    [SerializeField] Vector3 Pos;
 
     [Header("敵のリスポーン数")]
-    [SerializeReference] float E_Num;
+    [SerializeField] float E_Num;
+
+    bool Hit = false;
 
     void Start()
     {
@@ -28,25 +30,11 @@ public class EnemyGenerator : MonoBehaviour
             {
                 //enemyをインスタンス化する(生成する)
                 GameObject enemy = Instantiate(enemyPrefab);
-                enemy.transform.position = new Vector3(x + E_Num, y, z);
-
+                enemy.transform.position = new Vector3(Pos.x + E_Num, Pos.y, Pos.z);
             }
-
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
    
 
-    void Update()
-    {
-
-        for (int i = 0; i < E_Num; ++i)
-        {
-            //enemyをインスタンス化する(生成する)
-            GameObject enemy = Instantiate(enemyPrefab);
-            enemy.transform.position = new Vector3(x + E_Num, y, z);
-
-        }
-        Destroy(this.gameObject);
-    }
 }

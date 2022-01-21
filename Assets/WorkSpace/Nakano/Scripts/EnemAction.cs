@@ -34,6 +34,8 @@ public class EnemAction : MonoBehaviour
     GameObject Player_obj; //プレイヤーを取得
     bool isDead = false;
 
+    [SerializeField] HumanList humanList;
+
     [Header("死亡後に消えるまでの時間")]
     [SerializeField]
     private float deathTime = 3.0f;
@@ -59,7 +61,7 @@ public class EnemAction : MonoBehaviour
 
     void Start()
     {
-
+        humanList = GameObject.FindGameObjectWithTag("Human_List").GetComponent<HumanList>();
         state = EnemyState.Walk;
         for (int i = 0; i < Human_obj.Length; ++i)
         {
@@ -137,40 +139,42 @@ public class EnemAction : MonoBehaviour
         //}
 
 
-
-        if (Human_script[TargetCount].isDaed == true)
+        if (Human_script[TargetCount] != null)
         {
-            TargetCount++;
-        }
-
-        //else if (PL_Obj.isDaed == true)
-        //{
-           
-
-
-        //}
-
-        else
-        {
-            float dis = Vector3.Distance(this.gameObject.transform.position, Player_obj.transform.position);
-
-            if (dis < Dis)
+            if (Human_script[TargetCount].isDaed == true)
             {
-                Elapsed += Time.deltaTime;
-                myAnim.SetFloat("Speed", 0);
-                myRB.velocity = Vector3.zero;
-                if (Elapsed > 2)
-                {
-                    myAnim.SetTrigger("Attack"); //攻撃開始
-                    Elapsed = 0.0f;
-                }
+                TargetCount++;
             }
+
+            //else if (PL_Obj.isDaed == true)
+            //{
+
+
+
+            //}
+
             else
             {
-                this.transform.LookAt(Player_obj.transform.position);
-                myRB.velocity = transform.forward * Speed;
-                myAnim.SetFloat("Speed", Speed);
-                Elapsed = 5.0f;
+                float dis = Vector3.Distance(this.gameObject.transform.position, Player_obj.transform.position);
+
+                if (dis < Dis)
+                {
+                    Elapsed += Time.deltaTime;
+                    myAnim.SetFloat("Speed", 0);
+                    myRB.velocity = Vector3.zero;
+                    if (Elapsed > 2)
+                    {
+                        myAnim.SetTrigger("Attack"); //攻撃開始
+                        Elapsed = 0.0f;
+                    }
+                }
+                else
+                {
+                    this.transform.LookAt(Player_obj.transform.position);
+                    myRB.velocity = transform.forward * Speed;
+                    myAnim.SetFloat("Speed", Speed);
+                    Elapsed = 5.0f;
+                }
             }
         }
 
