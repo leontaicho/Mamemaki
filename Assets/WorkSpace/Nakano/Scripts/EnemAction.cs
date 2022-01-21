@@ -28,11 +28,13 @@ public class EnemAction : MonoBehaviour
     [Header("土煙 : エフェクト")]
     [SerializeField] private GameObject PatSmoke;
     ParticleSystem.MainModule SmokeMain; //砂煙の本体
-    Human_Action[] Human_script = new Human_Action[10];
+    List<Human_Action> Human_script = new List<Human_Action>();
     public GameObject[] Human_obj;
     Human_Action PL_Obj;
     GameObject Player_obj; //プレイヤーを取得
     bool isDead = false;
+
+    [SerializeField] HumanList humanList;
 
     [Header("死亡後に消えるまでの時間")]
     [SerializeField]
@@ -55,15 +57,13 @@ public class EnemAction : MonoBehaviour
     public bool CanAttack = false;
 
     private float Elapsed = 5.0f;
-
-
     void Start()
     {
-
+        humanList = GameObject.FindGameObjectWithTag("Human_List").GetComponent<HumanList>();
         state = EnemyState.Walk;
-        for (int i = 0; i < Human_obj.Length; ++i)
+        for (int i = 0; i < humanList.Humans.Count; ++i)
         {
-            Human_script[i] = Human_obj[i].GetComponent<Human_Action>();
+            Human_script.Add(humanList.Humans[i].GetComponent<Human_Action>());
         }
 
         TargetCount = 0;
@@ -137,40 +137,47 @@ public class EnemAction : MonoBehaviour
         //}
 
 
-
-        if (Human_script[TargetCount].isDaed == true)
+        if (Human_script.Count < TargetCount)
         {
-            TargetCount++;
-        }
-
-        //else if (PL_Obj.isDaed == true)
-        //{
-           
-
-
-        //}
-
-        else
-        {
-            float dis = Vector3.Distance(this.gameObject.transform.position, Player_obj.transform.position);
-
-            if (dis < Dis)
+            if (Human_script[TargetCount].isDaed == true)
             {
-                Elapsed += Time.deltaTime;
-                myAnim.SetFloat("Speed", 0);
-                myRB.velocity = Vector3.zero;
-                if (Elapsed > 2)
-                {
-                    myAnim.SetTrigger("Attack"); //攻撃開始
-                    Elapsed = 0.0f;
-                }
+                TargetCount++;
             }
+
+            //else if (PL_Obj.isDaed == true)
+            //{
+
+
+
+            //}
+
             else
             {
-                this.transform.LookAt(Player_obj.transform.position);
-                myRB.velocity = transform.forward * Speed;
-                myAnim.SetFloat("Speed", Speed);
-                Elapsed = 5.0f;
+
+                //プレイヤに攻撃されていない間は人間を攻撃
+
+
+                //攻撃されたらプレイヤを追いかける
+                float dis = Vector3.Distance(this.gameObject.transform.position, Player_obj.transform.position);
+
+                if (dis < Dis)
+                {
+                    Elapsed += Time.deltaTime;
+                    myAnim.SetFloat("Speed", 0);
+                    myRB.velocity = Vector3.zero;
+                    if (Elapsed > 2)
+                    {
+                        myAnim.SetTrigger("Attack"); //攻撃開始
+                        Elapsed = 0.0f;
+                    }
+                }
+                else
+                {
+                    this.transform.LookAt(Player_obj.transform.position);
+                    myRB.velocity = transform.forward * Speed;
+                    myAnim.SetFloat("Speed", Speed);
+                    Elapsed = 5.0f;
+                }
             }
         }
 

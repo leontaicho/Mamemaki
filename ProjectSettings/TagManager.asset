@@ -11,6 +11,7 @@ TagManager:
   - Tree
   - FxTemporaire
   - Weapon
+  - Human_List
   layers:
   - Default
   - TransparentFX

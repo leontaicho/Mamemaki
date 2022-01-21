@@ -4,15 +4,8 @@ using UnityEngine;
 //using UnityEngine.UI;
 //using UnityEngine.SceneManagement;
 
-public class Trriger_Action : MonoBehaviour
+public class HumanList : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+    List<GameObject> obj_Humans = new List<GameObject>();
+    public List<GameObject> Humans => obj_Humans; 
 }
