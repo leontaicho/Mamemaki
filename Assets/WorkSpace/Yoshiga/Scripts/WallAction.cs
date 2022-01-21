@@ -10,33 +10,27 @@ public class WallAction : MonoBehaviour
     [SerializeField] private float blowAwayDelay;
     [Header("爆発エフェクト : オブジェクト")]
     [SerializeField] private GameObject MineEffect;
-    private Vector3[] initPos = new Vector3[10];
-    private Vector3[] initRotation = new Vector3[10];
+    public bool breakFlg = false;  // 破壊されているかのフラグ
+    public int id; // 自身が何番目の壁なのかの変数
+    [Header("リスポーン時間 : 秒")]
+    [SerializeField] private float respawnInterval;
 
     // Start is called before the first frame update
     void Start()
     {
-        for(int i = 0; i < Boxes.Length; ++i)
-        {
-            initPos[i] = Boxes[i].transform.position;
-            initRotation[i] = new Vector3(Boxes[i].transform.rotation.x,
-                                          Boxes[i].transform.rotation.y,
-                                          Boxes[i].transform.rotation.z);
-        }
+       
+    }
+
+    public void SetID(int ID)
+    {
+        id = ID;
     }
 
     public void OnDamage()
     {
-        Invoke("BlowBox", blowAwayDelay);
-        
-    }
-
-    private void InitBoxes()
-    {
-        for(int i = 0;i < Boxes.Length; ++i)
+        if(!breakFlg)
         {
-            Boxes[i].transform.position = initPos[i];
-            Boxes[i].transform.rotation = Quaternion.Euler(initRotation[i].x,initRotation[i].y,initRotation[i].z);
+            Invoke("BlowBox", blowAwayDelay);
         }
     }
 
@@ -48,12 +42,22 @@ public class WallAction : MonoBehaviour
             i.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1.0f,1.0f),
                                                                         2.0f,
                                                                         Random.Range(-1.0f, 1.0f)) * 5.0f, ForceMode.Impulse);
+            i.layer = 9;
         }
+        breakFlg = true;
     }
     
     // Update is called once per frame
     void Update()
     {
-        
+        if(breakFlg)
+        {
+            respawnInterval -= Time.deltaTime;
+            if(respawnInterval <= 0)
+            {
+                GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().SetWalls(id);
+                Destroy(this);
+            }
+        }
     }
 }
