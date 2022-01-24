@@ -10,8 +10,8 @@ public class WallAction : MonoBehaviour
     [SerializeField] private float blowAwayDelay;
     [Header("爆発エフェクト : オブジェクト")]
     [SerializeField] private GameObject MineEffect;
-    public bool breakFlg = false;  // 破壊されているかのフラグ
-    public int id; // 自身が何番目の壁なのかの変数
+    private bool breakFlg = false;  // 破壊されているかのフラグ
+    private int id; // 自身が何番目の壁なのかの変数
     [Header("リスポーン時間 : 秒")]
     [SerializeField] private float respawnInterval;
 
@@ -56,6 +56,10 @@ public class WallAction : MonoBehaviour
             if(respawnInterval <= 0)
             {
                 GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>().SetWalls(id);
+                foreach (var i in Boxes)
+                {
+                    Destroy(i);
+                }
                 Destroy(this);
             }
         }

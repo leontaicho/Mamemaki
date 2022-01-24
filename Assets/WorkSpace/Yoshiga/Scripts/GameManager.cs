@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public float beansSpeed;
     [Header("村人の投げる豆の威力")]
     public int beansDmg;
+    [HideInInspector] public bool bossBattleFlg;    // ボス戦かどうかのフラグ
     [Header("ボス戦時の壁 : オブジェクト")]
     [SerializeField] private GameObject wallObj;
     [Header("ボス戦時の壁の数")]
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bossBattleFlg = false;
         wallPos = new Vector3[wallNum];
         wallRotation = new Vector3[wallNum];
 
@@ -35,6 +37,11 @@ public class GameManager : MonoBehaviour
             wallPos[i] = new Vector3(0, 1, i * 5);
             SetWalls(i);
         }
+    }
+
+    public void StartBossBattle()
+    {
+        bossBattleFlg = true;
     }
 
     // 壁生成処理

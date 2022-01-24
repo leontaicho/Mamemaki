@@ -13,6 +13,7 @@ public class BossAction : MonoBehaviour
     }
 
     private GameObject player;
+    private GameManager manager;
     private Animator myAnim;
     [Header("敵のHP")]
     [SerializeField] private int HP;
@@ -33,6 +34,7 @@ public class BossAction : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        manager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>();        
         myAnim = this.gameObject.GetComponent<Animator>();
         bossState = State.Idle;
         interval = attackInterval;
@@ -69,6 +71,8 @@ public class BossAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        manager.StartBossBattle();
+
         switch (bossState)
         {
             case State.Idle:

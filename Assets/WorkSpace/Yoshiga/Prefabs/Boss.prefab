@@ -3240,11 +3240,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b26b91bd35d24a64685446c7a9677ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 0
+  HP: 10
   attackInterval: 4
   stunInterval: 4
   bossState: 0
   stunEffect: {fileID: 312838470}
+  rayLength: 15
 --- !u!1 &2036004620876038651
 GameObject:
   m_ObjectHideFlags: 0
