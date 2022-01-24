@@ -12,6 +12,7 @@ TagManager:
   - FxTemporaire
   - Weapon
   - Human_List
+  - Boss
   layers:
   - Default
   - TransparentFX

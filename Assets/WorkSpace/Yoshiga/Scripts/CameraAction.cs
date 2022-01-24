@@ -12,12 +12,9 @@ public class CameraAction : MonoBehaviour
     [SerializeField]
     private float CameraPosY;
     [SerializeField]
-    private float CameraPosZ;
-
-    //カメラの位置変更用変数
-    private float degree = 0;
-    public GameObject bossObj; // ボス
-
+    private float CameraPosZ;    
+    private float degree = 0; // カメラの位置変更用変数
+    private GameObject bossObj; // ボス
     private Vector3 LookPos;    // カメラが見る位置
 
     // Start is called before the first frame update
@@ -25,6 +22,11 @@ public class CameraAction : MonoBehaviour
     {
         PlayerScript = Player.GetComponent<PlayerAction>();
         manager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>();
+    }
+
+    public void SetBoss()
+    {
+        bossObj = GameObject.FindGameObjectWithTag("Boss");
     }
 
     // Update is called once per frame

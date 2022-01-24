@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private CameraAction cameraScript;
     [Header("村人のHP")]
     public int villagerHP;
     [Header("村人が豆を投げるインターバル : 秒")]
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        cameraScript = this.gameObject.GetComponent<CameraAction>();
         bossBattleFlg = false;
         wallPos = new Vector3[wallNum];
         wallRotation = new Vector3[wallNum];
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
     public void StartBossBattle()
     {
         bossBattleFlg = true;
+        cameraScript.SetBoss();
     }
 
     // 壁生成処理

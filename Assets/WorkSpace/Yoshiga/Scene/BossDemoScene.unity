@@ -439,7 +439,6 @@ MonoBehaviour:
   Player: {fileID: 1204595971879572}
   CameraPosY: 2.5
   CameraPosZ: 4
-  bossObj: {fileID: 2048077493}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,11 +631,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1184748017418208925, guid: c955fa39e2d6bdc46b655bc8960a3fa3, type: 3}
   m_PrefabInstance: {fileID: 1421638998}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2048077493 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2036004620876038439, guid: 68c4d18bfb5e567409a6e8cdc12682ec, type: 3}
-  m_PrefabInstance: {fileID: 2036004621447976610}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1204595971879572 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8244916718323491929, guid: 5433fdeeb8b0f334bae35b290f307da7, type: 3}
@@ -700,6 +694,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2036004620876038439, guid: 68c4d18bfb5e567409a6e8cdc12682ec, type: 3}
       propertyPath: m_Name
+      value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 2036004620876038439, guid: 68c4d18bfb5e567409a6e8cdc12682ec, type: 3}
+      propertyPath: m_TagString
       value: Boss
       objectReference: {fileID: 0}
     m_RemovedComponents: []
