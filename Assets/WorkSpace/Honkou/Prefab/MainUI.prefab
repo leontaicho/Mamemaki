@@ -1722,6 +1722,7 @@ GameObject:
   - component: {fileID: 1161077999585223010}
   - component: {fileID: 1161077999585223011}
   - component: {fileID: 1161077999585223008}
+  - component: {fileID: 6886379183345230489}
   m_Layer: 5
   m_Name: imgIconEnemy0
   m_TagString: Untagged
@@ -1786,6 +1787,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &6886379183345230489
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161077999585223037}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 02c43c0e41f28bc4bb9043274802011e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1161077999665240708
 GameObject:
   m_ObjectHideFlags: 0

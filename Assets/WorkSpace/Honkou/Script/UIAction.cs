@@ -26,7 +26,7 @@ public class UIAction : MonoBehaviour
     //== Icon ==//
     public Image imgBoss;
     public Image[] imgEnemy = new Image[5];
-    public Image[] imgDamage = new Image[5];
+    public Image[] imgDamage;
     public Sprite imgDeadEnemy;
     Animator[] AnimDamage = new Animator[5];
     int MaxEnemy;
@@ -108,7 +108,7 @@ public class UIAction : MonoBehaviour
                 imgDamage[i].gameObject.SetActive(true);
                 imgTarget[i].gameObject.SetActive(false);
                 AnimDamage[i].SetTrigger("Damage");
-                Destroy(imgDamage[i].gameObject, 1.0f);
+                imgDamage[i + 1].gameObject.SetActive(false);
             }
         }
     }
