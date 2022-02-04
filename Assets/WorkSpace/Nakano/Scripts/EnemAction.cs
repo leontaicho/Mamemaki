@@ -53,6 +53,7 @@ public class EnemAction : MonoBehaviour
     float Dis = 3f;
 
     int TargetCount = 0;
+    bool DamagerHit = false; //鬼を操作するプレイヤーに攻撃されたのか判定用
 
     public bool CanAttack = false;
 
@@ -91,6 +92,7 @@ public class EnemAction : MonoBehaviour
     {
         if (other.gameObject.tag == "club" && !isDead)
         {
+
             if (HP < 0)
             {
                 Destroy(gameObject, deathTime);
@@ -98,6 +100,7 @@ public class EnemAction : MonoBehaviour
             else
             {
                 HP--;
+                DamagerHit = true;
             }
 
         }
@@ -120,21 +123,7 @@ public class EnemAction : MonoBehaviour
     void Update()
     {
 
-        //switch (state)
-        //{
-        //    case EnemyState.Walk:
-
-        //        break;
-
-        //    case EnemyState.Hit:
-        //        break;
-
-        //    case EnemyState.Attack:
-        //        break;
-
-        //    default:
-        //        break;
-        //}
+    
 
 
         if (Human_script.Count < TargetCount)
@@ -144,42 +133,71 @@ public class EnemAction : MonoBehaviour
                 TargetCount++;
             }
 
-            //else if (PL_Obj.isDaed == true)
-            //{
-
-
-
-            //}
+        
 
             else
             {
-
-                //プレイヤに攻撃されていない間は人間を攻撃
-
-
                 //攻撃されたらプレイヤを追いかける
-                float dis = Vector3.Distance(this.gameObject.transform.position, Player_obj.transform.position);
-
-                if (dis < Dis)
+                if (DamagerHit == true)
                 {
-                    Elapsed += Time.deltaTime;
-                    myAnim.SetFloat("Speed", 0);
-                    myRB.velocity = Vector3.zero;
-                    if (Elapsed > 2)
+                    //攻撃されたらプレイヤを追いかける
+                    float dis = Vector3.Distance(this.gameObject.transform.position, Player_obj.transform.position);
+
+                    if (dis < Dis)
                     {
-                        myAnim.SetTrigger("Attack"); //攻撃開始
-                        Elapsed = 0.0f;
+                        Elapsed += Time.deltaTime;
+                        myAnim.SetFloat("Speed", 0);
+                        myRB.velocity = Vector3.zero;
+                        if (Elapsed > 2)
+                        {
+                            myAnim.SetTrigger("Attack"); //攻撃開始
+                            Elapsed = 0.0f;
+                        }
+                    }
+                    else
+                    {
+                        this.transform.LookAt(Player_obj.transform.position);
+                        myRB.velocity = transform.forward * Speed;
+                        myAnim.SetFloat("Speed", Speed);
+                        Elapsed = 5.0f;
                     }
                 }
+
                 else
                 {
-                    this.transform.LookAt(Player_obj.transform.position);
-                    myRB.velocity = transform.forward * Speed;
-                    myAnim.SetFloat("Speed", Speed);
-                    Elapsed = 5.0f;
+                    //プレイヤに攻撃されていない間は人間を攻撃
+                    for (int i = 0; i < humanList.Humans.Count; ++i)
+                    {
+                        //人間が死んでるかを確認後生きている奴に攻撃
+                        if (Human_script[i].isDaed != false) 
+                        {
+                            float dis = Vector3.Distance(this.gameObject.transform.position, humanList.Humans[i].transform.position);
+
+                            if (dis < Dis)
+                            {
+                                Elapsed += Time.deltaTime;
+                                myAnim.SetFloat("Speed", 0);
+                                myRB.velocity = Vector3.zero;
+                                if (Elapsed > 2)
+                                {
+                                    myAnim.SetTrigger("Attack"); //攻撃開始
+                                    Elapsed = 0.0f;
+                                }
+                            }
+                            else
+                            {
+                                this.transform.LookAt(Player_obj.transform.position);
+                                myRB.velocity = transform.forward * Speed;
+                                myAnim.SetFloat("Speed", Speed);
+                                Elapsed = 5.0f;
+                            }
+                        }
+                    }
                 }
             }
         }
+
+
 
     }
 }
