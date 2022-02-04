@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: RHEF_SpruceTrunk
-  m_Shader: {fileID: 4800000, guid: 157aa0854507df64a98bcaca85de2adf, type: 3}
+  m_Shader: {fileID: 4800000, guid: 9c6cb390b6080ad4e9ab286b74abbf21, type: 3}
   m_ShaderKeywords: EFFECT_BUMP _EMISSION _NORMALMAP
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
