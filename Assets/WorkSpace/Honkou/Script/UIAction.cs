@@ -8,6 +8,8 @@ public class UIAction : MonoBehaviour
     //== HP ==//
     public Image imgHPbar;
     public Text txtHP;
+    public GameObject HP;
+    Animator HpAnim;
 
     //== MiniMap ==//
     public Image imgPlayer;
@@ -16,41 +18,44 @@ public class UIAction : MonoBehaviour
 
     GameObject Player;
     GameObject[] Enemy;
-    GameObject[] Human;
-    public float radoarLength = 30.0f;
+    public float radoarLength = 20.0f;
     RectTransform[] rt = new RectTransform[5];
     Vector2 offset;
-    float r = 0.5f;
+    float r = 0.4f;
 
     //== Icon ==//
     public Image imgBoss;
     public Image[] imgEnemy = new Image[5];
-
+    public Image[] imgDamage;
+    public Sprite imgDeadEnemy;
+    Animator[] AnimDamage = new Animator[5];
+    int MaxEnemy;
+    int enemyRemain;
+    int oldEnemyRemain;
 
     //== デバッグ用 ==//
-    //int CurrentHP = 100;
-    //int maxHP = 100;
-    int remain = 10;
-    int enemyRemain;
+    int CurrentHP = 100;
+    int maxHP = 100;
 
 
     // Start is called before the first frame update
     void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
-        Enemy = GameObject.FindGameObjectsWithTag("Enemy");
-        enemyRemain = Enemy.Length;
-        Human = GameObject.FindGameObjectsWithTag("Villager");
-        remain = Human.Length;
+
         for(int i = 0; i < 5; i++)
         {
+            AnimDamage[i] = imgDamage[i].gameObject.GetComponent<Animator>();
             rt[i] = imgTarget[i].GetComponent<RectTransform>();
             offset = imgPlayer.GetComponent<RectTransform>().anchoredPosition;
+            imgDamage[i].gameObject.SetActive(false);
+            imgEnemy[i].gameObject.SetActive(false);
         }
 
-        //HpChange(CurrentHP, maxHP);
-        //HumanRemain(remain);
-        EnemyRemain(enemyRemain);
+        HpAnim = HP.gameObject.GetComponent<Animator>();
+
+        HpChange(CurrentHP, maxHP);
+        EnemyRemainSet();
     }
 
     //HP表示
@@ -80,22 +85,9 @@ public class UIAction : MonoBehaviour
         {
             txtHP.text = "HP   000 / " + MaxHP.ToString().PadLeft(3,'0');
         }
+
+        HpAnim.SetTrigger("Damage");
     }
-
-
-    //残り人数表示
-    /*
-        @param Remain   残りの人間の数   
-    */
-    void HumanRemain(int Remain)
-    {
-        txtHuman.text = Remain.ToString().PadLeft(2, '0');
-        if(Remain < 0)
-        {
-            txtHuman.text = "00";
-        }
-    }
-
 
     //敵の残数表示
     /*
@@ -103,18 +95,36 @@ public class UIAction : MonoBehaviour
     */
     void EnemyRemain(int EnemyRemain)
     {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < MaxEnemy; i++)
         {
-            if(i < EnemyRemain)
+            if (i < EnemyRemain)
             {
                 imgEnemy[i].gameObject.SetActive(true);
                 imgTarget[i].gameObject.SetActive(true);
             }
             else
             {
-                imgEnemy[i].gameObject.SetActive(false);
+                imgEnemy[i].sprite = imgDeadEnemy;
+                imgDamage[i].gameObject.SetActive(true);
                 imgTarget[i].gameObject.SetActive(false);
+                AnimDamage[i].SetTrigger("Damage");
+                imgDamage[i + 1].gameObject.SetActive(false);
             }
+        }
+    }
+
+
+    //敵の残数表示セット
+    void EnemyRemainSet()
+    {
+        Enemy = GameObject.FindGameObjectsWithTag("Enemy");
+        MaxEnemy = Enemy.Length;
+        enemyRemain = MaxEnemy;
+
+        for (int i = 0; i < MaxEnemy; i++)
+        {
+            imgEnemy[i].gameObject.SetActive(true);
+            imgTarget[i].gameObject.SetActive(true);
         }
     }
 
@@ -132,34 +142,45 @@ public class UIAction : MonoBehaviour
             enemyDir[i] = Quaternion.Inverse(Player.transform.rotation) * enemyDir[i];
             enemyDir[i] = Vector3.ClampMagnitude(enemyDir[i], radoarLength);
 
-            rt[i].anchoredPosition = new Vector2(enemyDir[i].x * r + offset.x, enemyDir[i].z * r + offset.y);
+            rt[i].anchoredPosition = new Vector2((enemyDir[i].x * r) + offset.x, enemyDir[i].z * r + offset.y);
         }
+    }
+
+    //ボスエンカウント
+    public void BossEncount()
+    {
+        imgBoss.color = new Color(1.0f, 0.4f, 0.4f, 1.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
         //== HP確認用 ==//
-        //if (Input.GetKeyDown(KeyCode.LeftArrow))
-        //{
-        //    CurrentHP -= 10;
-        //    HpChange(CurrentHP, maxHP);
-        //}
-        //if (Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //    CurrentHP += 10;
-        //    HpChange(CurrentHP, maxHP);
-        //}
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            CurrentHP -= 10;
+            HpChange(CurrentHP, maxHP);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            CurrentHP += 10;
+            HpChange(CurrentHP, maxHP);
+        }
 
-        //残り人数確認用
-        Human = GameObject.FindGameObjectsWithTag("Villager");
-        remain = Human.Length;
-        HumanRemain(remain);
+        //== ボスエンカウント ==//
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            BossEncount();
+        }
 
         //敵の残数確認用
+        oldEnemyRemain = enemyRemain;
         Enemy = GameObject.FindGameObjectsWithTag("Enemy");
         enemyRemain = Enemy.Length;
-        EnemyRemain(enemyRemain);
+        if (enemyRemain != oldEnemyRemain)
+        {
+            EnemyRemain(enemyRemain);
+        }
 
         //ミニマップ表示
         MiniMap();
