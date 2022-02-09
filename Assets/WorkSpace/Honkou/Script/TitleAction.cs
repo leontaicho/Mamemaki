@@ -24,10 +24,10 @@ public class TitleAction : MonoBehaviour
     public Image Menu_12;
     public Image Menu_2;
     public Image Menu_22;
+    public Image Tutorial;
     Animator FadeLogo;
-    Animator FadeMenu;
+    Animator FadeTutorial;
 
-    float Elapsed = 0.0f;
     float Alpha = 1.0f;
     int Select = 10;
 
@@ -35,7 +35,7 @@ public class TitleAction : MonoBehaviour
     void Start()
     {
         FadeLogo = Logo.gameObject.GetComponent<Animator>();
-        FadeMenu = Menu.gameObject.GetComponent<Animator>();
+        FadeTutorial = Tutorial.gameObject.GetComponent<Animator>();
 
         TitleInit();
     }
@@ -44,11 +44,10 @@ public class TitleAction : MonoBehaviour
     {
         Fade.gameObject.SetActive(true);
         Logo.gameObject.SetActive(true);
+        Tutorial.gameObject.SetActive(false);
         Menu.gameObject.SetActive(false);
 
-        //Logo.transform.position = new Vector3(0, 0, 0);
         state = TitleState.Fade;
-        Elapsed = 0.0f;
         Alpha = 1.0f;
         Select = 0;
     }
@@ -63,12 +62,21 @@ public class TitleAction : MonoBehaviour
         Menu_12.gameObject.SetActive(true);
         Menu_2.gameObject.SetActive(false);
         Menu_22.gameObject.SetActive(true);
-
-        FadeMenu.SetTrigger("FadeMenu");
     }
 
     void FadeMenuFinish()
     {
+        state = TitleState.Menu;
+    }
+
+    void FadeFinish()
+    {
+        state = TitleState.Tutorial;
+    }
+
+    void FadeTutorialFinish()
+    {
+        Tutorial.gameObject.SetActive(false);
         state = TitleState.Menu;
     }
 
@@ -107,7 +115,7 @@ public class TitleAction : MonoBehaviour
                 break;
 
             case TitleState.Menu:
-                if(Input.GetAxis("HorizontalPad") <= -1)
+                if(Input.GetAxis("HorizontalPad") <= -1 || Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     Select = 0;
                     Menu_1.gameObject.SetActive(true);
@@ -115,7 +123,7 @@ public class TitleAction : MonoBehaviour
                     Menu_2.gameObject.SetActive(false);
                     Menu_22.gameObject.SetActive(true);
                 }
-                else if(Input.GetAxis("HorizontalPad") >= 1)
+                else if(Input.GetAxis("HorizontalPad") >= 1 || Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     Select = 1;
                     Menu_1.gameObject.SetActive(false);
@@ -134,7 +142,8 @@ public class TitleAction : MonoBehaviour
                             break;
 
                         case 1:
-                            state = TitleState.Tutorial;
+                            Tutorial.gameObject.SetActive(true);
+                            Invoke("FadeFinish", 1.0f);
                             break;
                     }
                 }
@@ -143,7 +152,8 @@ public class TitleAction : MonoBehaviour
             case TitleState.Tutorial:
                 if (Input.GetButtonDown("BtnA"))
                 {
-                    state = TitleState.Menu;
+                    FadeTutorial.SetTrigger("Fade");
+                    Invoke("FadeTutorialFinish", 1.0f);
                 }
                 break;
 
