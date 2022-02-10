@@ -29,7 +29,7 @@ public class BossAction : MonoBehaviour
     [SerializeField] private GameObject stunEffect;
     [Header("前方向のRayの長さ")]
     [SerializeField] private float rayLength;
-    public bool blowFlg;   // 壁が吹き飛んだかのフラグ
+    private bool blowFlg;   // 壁が吹き飛んだかのフラグ
     private bool attackFlg;
   
     // Start is called before the first frame update
@@ -83,14 +83,12 @@ public class BossAction : MonoBehaviour
 
     private void SetAttackFlg()
     {
-        attackFlg = true;
+        attackFlg = true;      
     }
 
     // Update is called once per frame
     void Update()
     {
-        //manager.StartBossBattle();
-
         switch (bossState)
         {
             case State.Idle:
@@ -124,9 +122,14 @@ public class BossAction : MonoBehaviour
                     if(!blowFlg)
                     {
                         player.GetComponent<PlayerAction>().OnDamage(10);
+                        Debug.Log(hit.collider.gameObject);
                     }
                     attackFlg = false;
-                }             
+                }
+                else
+                {
+                    this.gameObject.transform.LookAt(player.transform.position);
+                }
                 break;
             case State.Hit:
                 if (hitInterval > 0)

@@ -39,6 +39,9 @@ public class PlayerAction : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer[] myMesh = new SkinnedMeshRenderer[3];
     private bool canAttack;    // 攻撃判定がオンかどうかのフラグ
     public bool CanAttack => canAttack;
+    private Vector3 bossBattleIniPos = new Vector3(10, 0.5f, 375);
+    private float bossDistance = 0.0f;
+    private GameObject boss;
 
     // Start is called before the first frame update
     void Start()
@@ -60,12 +63,14 @@ public class PlayerAction : MonoBehaviour
         if(HP <= 0)
         {
             myAnim.SetTrigger("Death");
+            myRB.velocity = Vector3.zero;
             state = State.Dead;
         }
         else
         {
             myAnim.SetTrigger("Hit");
             invincibleTime = IntervalTime;
+            myRB.velocity = Vector3.zero;
             state = State.Hit;
         }       
     }
@@ -93,9 +98,31 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "BattleZone" && !manager.BossBattleFlg)
+        {
+            manager.StartBossBattle();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if(manager.BossBattleFlg)
+        {
+            if(boss == null)
+            {
+                boss = GameObject.FindGameObjectWithTag("Boss");
+            }
+            bossDistance = Vector3.Distance(this.transform.position, boss.transform.position);
+            // 離れすぎると瞬間移動
+            if(bossDistance > 30)
+            {
+                this.gameObject.transform.position = bossBattleIniPos;
+            }
+        }
+
         // 点滅処理
         if(invincibleTime > 0)
         {
@@ -126,14 +153,15 @@ public class PlayerAction : MonoBehaviour
             }
         }
 
-        moveX = Input.GetAxis("Horizontal");
-        moveZ = Input.GetAxis("Vertical");
-        Vector3 dir = new Vector3(moveX, 0, moveZ);
-        if(state != State.Dead && state != State.Hit)
+        moveX = 0;
+        moveZ = 0;       
+        if (state != State.Dead && state != State.Hit)
         {
-            myAnim.SetFloat("Speed", dir.magnitude);
+            moveX = Input.GetAxis("Horizontal");
+            moveZ = Input.GetAxis("Vertical");                   
         }
-        
+        Vector3 dir = new Vector3(moveX, 0, moveZ);
+        myAnim.SetFloat("Speed", dir.magnitude);
         // 移動方向への量に応じて砂ぼこりを制御する。
         SmokeMain.startSize = dir.sqrMagnitude * 1.5f;
 

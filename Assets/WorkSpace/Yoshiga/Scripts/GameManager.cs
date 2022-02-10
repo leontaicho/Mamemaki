@@ -22,27 +22,24 @@ public class GameManager : MonoBehaviour
     public int BeansDmg => beansDmg;
     private bool bossBattleFlg;    // ボス戦かどうかのフラグ
     public bool BossBattleFlg => bossBattleFlg;
+    [Header("ボス : オブジェクト")]
+    [SerializeField] private GameObject bossObj;
     [Header("ボス戦時の壁 : オブジェクト")]
     [SerializeField] private GameObject wallObj;
-    [Header("ボス戦時の壁の数")]
-    [SerializeField] private int wallNum;
     [Header("ボス戦時の壁の位置")]
-    private Vector3[] wallPos;
+    [SerializeField]private Vector3[] wallPos = new Vector3[8];
     [Header("ボス戦時の壁の角度")]
-    [SerializeField] private Vector3[] wallRotation;
-
+    [SerializeField] private Vector3[] wallRotation = new Vector3[8];
+    private Vector3 bossSpawnPos = new Vector3(-9, 0.5f, 375);
+    
 
     // Start is called before the first frame update
     void Start()
     {
         cameraScript = this.gameObject.GetComponent<CameraAction>();
         bossBattleFlg = false;
-        wallPos = new Vector3[wallNum];
-        wallRotation = new Vector3[wallNum];
-
-        for (int i = 0;i < wallNum; ++i)
+        for (int i = 0; i < 8; ++i)
         {
-            wallPos[i] = new Vector3(0, 1, i * 5);
             SetWalls(i);
         }
     }
@@ -50,6 +47,7 @@ public class GameManager : MonoBehaviour
     public void StartBossBattle()
     {
         bossBattleFlg = true;
+        Instantiate(bossObj, bossSpawnPos, bossObj.transform.rotation);
         cameraScript.SetBoss();
     }
 

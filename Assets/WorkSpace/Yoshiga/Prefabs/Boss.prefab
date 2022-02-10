@@ -3159,7 +3159,7 @@ GameObject:
   - component: {fileID: 2036004620876086273}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3240,10 +3240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b26b91bd35d24a64685446c7a9677ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
+  HP: 5
   attackInterval: 4
   stunInterval: 4
-  bossState: 0
   stunEffect: {fileID: 312838470}
   rayLength: 15
 --- !u!1 &2036004620876038651

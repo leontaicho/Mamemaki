@@ -178,7 +178,7 @@ MonoBehaviour:
   - {fileID: 894159350742801820}
   - {fileID: 4565917122897621673}
   MineEffect: {fileID: 559793307886522298, guid: d47f09db7641ebe438e197b2de745e76, type: 3}
-  respawnInterval: 10
+  respawnInterval: 20
 --- !u!65 &2023912413
 BoxCollider:
   m_ObjectHideFlags: 0
