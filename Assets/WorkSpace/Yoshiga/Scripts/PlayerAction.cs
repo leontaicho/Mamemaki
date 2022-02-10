@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerAction : MonoBehaviour
 {
-    enum State
+    public enum State
     {
         Idle,
         Walk,
         Attack,
         Hit,
+        Dead,
     }
 
     private GameManager manager;    // GameManager
@@ -29,13 +30,15 @@ public class PlayerAction : MonoBehaviour
     private Vector3 cameraForward; // カメラの向き   
     private Vector3 moveForward; // プレイヤーの向き
     private State state;    // 自身のステータス
+    public State playerState => state;
     [Header("土煙 : エフェクト")]
     [SerializeField] private GameObject PatSmoke;
     ParticleSystem.MainModule SmokeMain; //砂煙の本体  
     private float invincibleTime;    // プレイヤーの無敵時間
     [Header("自身の体のメッシュ")]
     [SerializeField] private SkinnedMeshRenderer[] myMesh = new SkinnedMeshRenderer[3];
-    /*[HideInInspector]*/ public bool CanAttack;    // 攻撃判定がオンかどうかのフラグ
+    private bool canAttack;    // 攻撃判定がオンかどうかのフラグ
+    public bool CanAttack => canAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -48,26 +51,34 @@ public class PlayerAction : MonoBehaviour
         MainCamera = GameObject.FindGameObjectWithTag("MainCamera");
         manager = MainCamera.GetComponent<GameManager>();
         SmokeMain = PatSmoke.GetComponent<ParticleSystem>().main;
-        CanAttack = false;
+        canAttack = false;
     }
 
     public void OnDamage(int Dmg)
     {
         HP -= Dmg;
-        myAnim.SetTrigger("Hit");
-        invincibleTime = IntervalTime;
-        state = State.Hit;
+        if(HP <= 0)
+        {
+            myAnim.SetTrigger("Death");
+            state = State.Dead;
+        }
+        else
+        {
+            myAnim.SetTrigger("Hit");
+            invincibleTime = IntervalTime;
+            state = State.Hit;
+        }       
     }
 
     private void AttackStart()
     {
-        CanAttack = true;
+        canAttack = true;
     }
 
     private void FinishAttack()
     {
         state = State.Idle;
-        CanAttack = false;
+        canAttack = false;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -77,7 +88,7 @@ public class PlayerAction : MonoBehaviour
             Destroy(other.gameObject);
             if(invincibleTime <= 0)
             {
-                OnDamage(manager.beansDmg);
+                OnDamage(manager.BeansDmg);
             }
         }
     }
@@ -118,13 +129,16 @@ public class PlayerAction : MonoBehaviour
         moveX = Input.GetAxis("Horizontal");
         moveZ = Input.GetAxis("Vertical");
         Vector3 dir = new Vector3(moveX, 0, moveZ);
-        myAnim.SetFloat("Speed", dir.magnitude);
-
+        if(state != State.Dead && state != State.Hit)
+        {
+            myAnim.SetFloat("Speed", dir.magnitude);
+        }
+        
         // 移動方向への量に応じて砂ぼこりを制御する。
         SmokeMain.startSize = dir.sqrMagnitude * 1.5f;
 
         // 攻撃処理
-        if (Input.GetButtonDown("BumperR") && state != State.Hit && state != State.Attack)
+        if (Input.GetButtonDown("BumperR") && state != State.Hit && state != State.Attack && state != State.Dead)
         {
             myAnim.SetTrigger("Attack");
             myRB.velocity = Vector3.zero;

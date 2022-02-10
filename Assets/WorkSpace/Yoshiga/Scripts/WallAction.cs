@@ -6,11 +6,10 @@ public class WallAction : MonoBehaviour
 {
     [Header("ブロック配列")]
     [SerializeField] private GameObject[] Boxes = new GameObject[10];
-    [Header("敵が箱を攻撃するタイミング")]
-    [SerializeField] private float blowAwayDelay;
     [Header("爆発エフェクト : オブジェクト")]
     [SerializeField] private GameObject MineEffect;
     private bool breakFlg = false;  // 破壊されているかのフラグ
+    public bool BreakFlg => breakFlg;
     private int id; // 自身が何番目の壁なのかの変数
     [Header("リスポーン時間 : 秒")]
     [SerializeField] private float respawnInterval;
@@ -26,25 +25,22 @@ public class WallAction : MonoBehaviour
         id = ID;
     }
 
-    public void OnDamage()
+    public void BlowBox()
     {
-        if(!breakFlg)
+        if (!breakFlg)
         {
-            Invoke("BlowBox", blowAwayDelay);
+            Instantiate(MineEffect, transform.position, transform.rotation);
+            foreach (var i in Boxes)
+            {
+                i.gameObject.GetComponent<Rigidbody>().mass = 1;
+                i.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1.0f, 1.0f),
+                                                                            2.0f,
+                                                                            Random.Range(-1.0f, 1.0f)) * 5.0f, ForceMode.Impulse);
+                i.layer = 9;
+            }
+            breakFlg = true;
         }
-    }
-
-    private void BlowBox()
-    {
-        Instantiate(MineEffect, transform.position, transform.rotation);
-        foreach (var i in Boxes)
-        {
-            i.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1.0f,1.0f),
-                                                                        2.0f,
-                                                                        Random.Range(-1.0f, 1.0f)) * 5.0f, ForceMode.Impulse);
-            i.layer = 9;
-        }
-        breakFlg = true;
+        
     }
     
     // Update is called once per frame

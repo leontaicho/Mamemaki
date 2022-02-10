@@ -23,7 +23,7 @@ public class VillagerAction : MonoBehaviour
         myAnim = this.gameObject.GetComponent<Animator>();
         manager = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<GameManager>();
         interval = Random.Range(1.0f,5.0f);
-        beansNum = manager.beansNum;
+        beansNum = manager.BeansNum;
         beans = (GameObject)Resources.Load("Beans");
         myCollider = this.gameObject.GetComponent<CapsuleCollider>();
         // リストに要素を入れる
@@ -33,7 +33,7 @@ public class VillagerAction : MonoBehaviour
             targetList.Add(i);
         }
         targetList.Add(GameObject.FindGameObjectWithTag("Player"));
-        HP = manager.villagerHP;
+        HP = manager.VillagerHP;
         FindTarget();
     }
 
@@ -89,7 +89,7 @@ public class VillagerAction : MonoBehaviour
                        + new Vector3(this.gameObject.transform.forward.x + Random.Range(-0.5f,0.5f),
                                      Random.Range(1.0f, 2.0f), 
                                      this.gameObject.transform.forward.z);
-            bRB.AddForce(throwForce * manager.beansSpeed, ForceMode.Impulse);
+            bRB.AddForce(throwForce * manager.BeansSpeed, ForceMode.Impulse);
             myBeansList.Add(b);
         }
     }
@@ -104,7 +104,7 @@ public class VillagerAction : MonoBehaviour
             if(interval <= 0 && target)
             {
                 myAnim.SetTrigger("Attack");
-                interval = manager.throwInterval;
+                interval = manager.ThrowInterval;
                 FindTarget();
                 Invoke("ThrowBeans", 0.5f);
             }

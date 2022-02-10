@@ -32,7 +32,7 @@ public class CameraAction : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(manager.bossBattleFlg)
+        if(manager.BossBattleFlg)
         {
             LookPos = new Vector3(bossObj.transform.position.x, bossObj.transform.position.y + 2, bossObj.transform.position.z);
             this.transform.position = Player.transform.position 

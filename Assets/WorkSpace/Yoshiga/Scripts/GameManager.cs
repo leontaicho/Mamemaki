@@ -6,16 +6,22 @@ public class GameManager : MonoBehaviour
 {
     private CameraAction cameraScript;
     [Header("村人のHP")]
-    public int villagerHP;
+    [SerializeField]private int villagerHP;
+    public int VillagerHP => villagerHP;
     [Header("村人が豆を投げるインターバル : 秒")]
-    public float throwInterval;
+    [SerializeField] private float throwInterval;
+    public float ThrowInterval => throwInterval;
     [Header("村人が投げる豆の数 : 個")]
-    public int beansNum;
+    [SerializeField] private int beansNum;
+    public int BeansNum => beansNum;
     [Header("村人の投げる豆の速さ")]
-    public float beansSpeed;
+    [SerializeField] private float beansSpeed;
+    public float BeansSpeed => beansSpeed;
     [Header("村人の投げる豆の威力")]
-    public int beansDmg;
-    [HideInInspector] public bool bossBattleFlg;    // ボス戦かどうかのフラグ
+    [SerializeField] private int beansDmg;
+    public int BeansDmg => beansDmg;
+    private bool bossBattleFlg;    // ボス戦かどうかのフラグ
+    public bool BossBattleFlg => bossBattleFlg;
     [Header("ボス戦時の壁 : オブジェクト")]
     [SerializeField] private GameObject wallObj;
     [Header("ボス戦時の壁の数")]
@@ -59,6 +65,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
