@@ -67,6 +67,7 @@ public class PlayerAction : MonoBehaviour
             SEManager.Instance.Play(SEPath.DOWN);
             myRB.velocity = Vector3.zero;
             state = State.Dead;
+            manager.SceneChange();
         }
         else
         {

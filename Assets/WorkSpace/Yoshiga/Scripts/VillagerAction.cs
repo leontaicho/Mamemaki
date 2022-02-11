@@ -5,6 +5,7 @@ using UnityEngine;
 public class VillagerAction : MonoBehaviour
 {
     private int HP; // 村人のHP
+    public int hp => HP;
     private CapsuleCollider myCollider;
     private List<GameObject> targetList = new List<GameObject>();   // 豆を投げつけるターゲットリスト
     private GameObject target;  // 投げる相手を格納している変数

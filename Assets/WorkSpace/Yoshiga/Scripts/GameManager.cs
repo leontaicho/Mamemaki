@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KanKikuchi.AudioManager;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private CameraAction cameraScript;
@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BGMManager.Instance.Play(BGMPath.FLOOR_BGM);
         cameraScript = this.gameObject.GetComponent<CameraAction>();
         bossBattleFlg = false;
         for (int i = 0; i < 8; ++i)
@@ -60,6 +61,17 @@ public class GameManager : MonoBehaviour
         Walls = Instantiate(wallObj, wallPos[ID], wallObj.transform.rotation);
         Walls.transform.rotation = Quaternion.Euler(wallRotation[ID]);
         Walls.GetComponent<WallAction>().SetID(ID);
+    }
+
+    // タイトルに移行
+    private void ChangeTitle()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
+    public void SceneChange()
+    {
+        Invoke("ChangeTitle", 3.0f);
     }
 
     // Update is called once per frame

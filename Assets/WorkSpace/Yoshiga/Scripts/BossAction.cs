@@ -54,6 +54,7 @@ public class BossAction : MonoBehaviour
                 bossState = State.Death;
                 BGMManager.Instance.Stop();
                 myAnim.SetTrigger("Death");
+                manager.SceneChange();
             }
             else
             {

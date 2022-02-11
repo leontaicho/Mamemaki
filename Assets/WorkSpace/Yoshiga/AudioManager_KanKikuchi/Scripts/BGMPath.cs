@@ -6,6 +6,7 @@
 public static class BGMPath{
 
 	public const string BOSS_BATTLE_BGM = "BGM/BossBattleBGM";
+	public const string FLOOR_BGM       = "BGM/floorBGM";
 
 }
 
