@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using KanKikuchi.AudioManager;
 public class PlayerAction : MonoBehaviour
 {
     public enum State
@@ -69,6 +69,7 @@ public class PlayerAction : MonoBehaviour
         else
         {
             myAnim.SetTrigger("Hit");
+            SEManager.Instance.Play(SEPath.DAMAGE);
             invincibleTime = IntervalTime;
             myRB.velocity = Vector3.zero;
             state = State.Hit;
@@ -169,6 +170,7 @@ public class PlayerAction : MonoBehaviour
         if (Input.GetButtonDown("BumperR") && state != State.Hit && state != State.Attack && state != State.Dead)
         {
             myAnim.SetTrigger("Attack");
+            SEManager.Instance.Play(SEPath.ATTACK);
             myRB.velocity = Vector3.zero;
             state = State.Attack;
         }

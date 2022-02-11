@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KanKikuchi.AudioManager;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
     public void StartBossBattle()
     {
         bossBattleFlg = true;
+        BGMManager.Instance.Play(BGMPath.BOSS_BATTLE_BGM);
         Instantiate(bossObj, bossSpawnPos, bossObj.transform.rotation);
         cameraScript.SetBoss();
     }
