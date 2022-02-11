@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KanKikuchi.AudioManager;
 
 public class TreeAction : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class TreeAction : MonoBehaviour
         if(other.gameObject.tag == "Weapon" && playerScript.CanAttack)
         {
             --HP;
+            SEManager.Instance.Play(SEPath.HIT);
             // ヒットエフェクトを生成
             Instantiate(HitEffect, other.gameObject.transform.position, other.gameObject.transform.rotation);
             if(HP <= 0)

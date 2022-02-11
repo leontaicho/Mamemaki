@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KanKikuchi.AudioManager;
 
 public class BossAction : MonoBehaviour
 {
@@ -51,6 +52,7 @@ public class BossAction : MonoBehaviour
             if(HP <= 0)
             {
                 bossState = State.Death;
+                BGMManager.Instance.Stop();
                 myAnim.SetTrigger("Death");
             }
             else
@@ -66,6 +68,7 @@ public class BossAction : MonoBehaviour
     {
         if(bossState != State.Death)
         {
+            SEManager.Instance.Play(SEPath.STAN, 1, 0, 1, true);
             hitInterval = stunInterval;
             stunEffect.SetActive(true);
         }      
@@ -99,6 +102,7 @@ public class BossAction : MonoBehaviour
                     {
                         interval = 0;
                         myAnim.SetTrigger("Attack");
+                        SEManager.Instance.Play(SEPath.BOSS_ATTACK);
                         bossState = State.Attack;
                         Invoke("SetAttackFlg", 1.0f);
                     }
@@ -116,6 +120,7 @@ public class BossAction : MonoBehaviour
                         if (hit.collider.gameObject.tag == "Wall" && !blowFlg && !hit.collider.gameObject.GetComponent<WallAction>().BreakFlg)
                         {
                             hit.collider.gameObject.GetComponent<WallAction>().BlowBox();
+                            SEManager.Instance.Play(SEPath.EXPLOSION);
                             blowFlg = true;
                         }
                     }
@@ -138,6 +143,7 @@ public class BossAction : MonoBehaviour
                     if (hitInterval <= 0)
                     {
                         myAnim.SetTrigger("FinishStun");
+                        SEManager.Instance.Stop(SEPath.STAN);
                         stunEffect.SetActive(false);
                         bossState = State.Idle;
                         // 攻撃頻度のリセット

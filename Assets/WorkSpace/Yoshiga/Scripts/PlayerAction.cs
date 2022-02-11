@@ -63,6 +63,8 @@ public class PlayerAction : MonoBehaviour
         if(HP <= 0)
         {
             myAnim.SetTrigger("Death");
+            BGMManager.Instance.Stop();
+            SEManager.Instance.Play(SEPath.DOWN);
             myRB.velocity = Vector3.zero;
             state = State.Dead;
         }
