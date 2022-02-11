@@ -28,9 +28,9 @@ public class EnemAction : MonoBehaviour
     [Header("土煙 : エフェクト")]
     [SerializeField] private GameObject PatSmoke;
     ParticleSystem.MainModule SmokeMain; //砂煙の本体
-    List<Human_Action> Human_script = new List<Human_Action>();
+    List<VillagerAction> Human_script = new List<VillagerAction>();
     public GameObject[] Human_obj;
-    Human_Action PL_Obj;
+    PlayerAction PL_Obj;
     GameObject Player_obj; //プレイヤーを取得
     bool isDead = false;
 
@@ -64,14 +64,14 @@ public class EnemAction : MonoBehaviour
         state = EnemyState.Walk;
         for (int i = 0; i < humanList.Humans.Count; ++i)
         {
-            Human_script.Add(humanList.Humans[i].GetComponent<Human_Action>());
+            Human_script.Add(humanList.Humans[i].GetComponent<VillagerAction>());
         }
 
         TargetCount = 0;
 
         //プレイヤーを取得
         Player_obj = GameObject.FindGameObjectWithTag("Player");
-        PL_Obj = Player_obj.GetComponent<Human_Action>();
+        PL_Obj = Player_obj.GetComponent<PlayerAction>();
         //自身のRigidbodyを取得
         myRB = this.gameObject.GetComponent<Rigidbody>();
         //自身のアニメーションを取得
@@ -128,7 +128,7 @@ public class EnemAction : MonoBehaviour
 
         if (Human_script.Count < TargetCount)
         {
-            if (Human_script[TargetCount].isDaed == true)
+            if (Human_script[TargetCount].hp <= 0)
             {
                 TargetCount++;
             }
@@ -169,7 +169,7 @@ public class EnemAction : MonoBehaviour
                     for (int i = 0; i < humanList.Humans.Count; ++i)
                     {
                         //人間が死んでるかを確認後生きている奴に攻撃
-                        if (Human_script[i].isDaed != false) 
+                        if (Human_script[i].hp > 0) 
                         {
                             float dis = Vector3.Distance(this.gameObject.transform.position, humanList.Humans[i].transform.position);
 
